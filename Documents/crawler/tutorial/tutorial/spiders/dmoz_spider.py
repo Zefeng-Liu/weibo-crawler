@@ -11,3 +11,24 @@ class DmozSpider(scrapy.Spider):
         filename = response.url.split("/")[-2]
         with open(filename, 'wb') as f:
             f.write(response.body)
+            
+           
+class QuotesSpider(scrapy.Spider):
+    name = "quotes"
+    start_urls = [
+        "http://quotes.toscrape.com/page/1",
+        "http://quotes.toscrape.com/page/2"
+    ]
+    
+    def parse(self, response):
+        for quote in response.css('div.quote'):
+            yield {
+                'text': quote.css('span.text::text').extract_first(),
+                'author': quote.css('small.author::text').extract_frist(),
+                'tags': quote.css('div.tags a.tag::text').extract(),
+            }
+            
+        next_page_url = response.css('li.next a::attr(href)').extract_first()
+        if next_page_url is not None:
+            next_page_url = response.urljoin(next_page_url)
+            yield scrapy.Request(next_page_url, callback=self.parse)

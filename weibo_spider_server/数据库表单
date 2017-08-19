@@ -1,0 +1,52 @@
+/* 具体字段含义请参看items.py */
+
+create table `users` (
+	`uid` varchar(30) NOT NULL,
+	`nick` varchar(100) NOT NULL,
+	`gender` varchar(30),
+	`region` varchar(100),
+	`birthday` varchar(100),
+	`introduction` text,
+	`authenticity` text,
+	`vip` varchar(30),
+	`tags` text,
+	`num_tweets` int(32),
+	`num_follows` int(32),
+	`num_fans` int(32),
+	`url` text,
+	PRIMARY KEY (`uid`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table `tweets` (
+	`tid` varchar(80) NOT NULL,
+	`uid` varchar(30) NOT NULL,
+	`hashtag` text,
+	`mention` text,
+	`content` text,
+	`post_time` varchar(100),
+	`crawl_time` datetime,
+	`coordinate` varchar(100),
+	`platform` varchar(100),
+	`likes` int(32),
+	`comments` int(32),
+	`retweets` int(32),
+	PRIMARY KEY(`tid`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `retweets` (
+	`origin_tid` varchar(80) NOT NULL,
+	`uid` varchar(30) NOT NULL,
+	`post_time` varchar(100),
+	`crawl_time` datetime,
+	`content` text,
+	`likes` int(32),
+	`platform` varchar(100),
+	`cascade_length` int(32),
+	PRIMARY KEY(`origin_tid`,`uid`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `follows` (
+	`follower` varchar(30) NOT NULL,
+	`followee` varchar(30) NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

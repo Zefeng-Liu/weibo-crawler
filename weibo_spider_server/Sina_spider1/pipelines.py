@@ -5,8 +5,8 @@ import datetime
 
 test = False
 
-DBNAME = 'weibo0807'
-PASSWD = 'Admin4747!'
+DBNAME = 'dbname' # replace with your dbname
+PASSWD = 'dbpassword' # replace with your password
 
 class MySQLPipeline(object):
     def __init__(self):
